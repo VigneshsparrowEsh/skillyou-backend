@@ -8,18 +8,12 @@ RUN apt-get update && apt-get install -y \
     libpango-1.0-0 libpangoft2-1.0-0 \
     && rm -rf /var/lib/apt/lists/*
 
-# Copy local JobSpy repository
-COPY JobSpy/ /JobSpy/
-
-# Install the local JobSpy library
-RUN pip install -e /JobSpy
-
-# Copy requirements
-COPY backend/requirements.txt /app/requirements.txt
+# Copy requirements and install dependencies
+COPY requirements.txt /app/requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy backend app
-COPY backend/app /app/app
+# Copy app source code
+COPY app /app/app
 
 # Expose port
 EXPOSE 8000
